@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BGG Pandemic Isolation Wrapper | goYippi labs</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style>
+		@font-face {
+			font-family: 'Source Sans Pro';
+			font-style: normal;
+			font-weight: 400;
+			src: url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+			src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'),
+					 url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+					 url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+					 url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.woff') format('woff'), /* Modern Browsers */
+					 url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+					 url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-regular.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+		}
+		@font-face {
+		  font-family: 'Source Sans Pro';
+		  font-style: normal;
+		  font-weight: 700;
+		  src: url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.eot'); /* IE9 Compat Modes */
+		  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'),
+		       url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		       url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+		       url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.woff') format('woff'), /* Modern Browsers */
+		       url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+		       url('https://www.goyippi.net/wp-content/themes/goyippi/fonts/source-sans-pro/source-sans-pro-v11-latin-ext_latin-700.svg#SourceSansPro') format('svg'); /* Legacy iOS */
+		}
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		body {
+			font-family: 'Source Sans Pro', Arial, sans-serif;
+			font-size: 0.875em;
+			line-height: 1.5;
+		}
+		header {
+			max-width: 640px;
+			margin: 36px auto;
+			padding: 0 20px;
+			text-align: center;
+		}
+		h1 {
+			color: #01204f;
+			font-size: 20px;
+		}
+		.bgg-feed {
+			max-width: 640px;
+			margin: 0 auto 60px;
+			padding: 0 20px;
+		}
+		.item dt {
+			color: #FFF;
+			font-weight: 700;
+			background-color: #01204f;
+			border-bottom: 1px solid #FFF;
+			padding: 10px;
+			cursor: pointer;
+		}
+		.item dd {
+			margin: 0 0 24px;
+			padding: 0;
+		}
+		.closed dd {
+			display: none;
+		}
+		select {
+				font-family: 'Source Sans Pro', Arial, sans-serif;
+				font-size: 1em;
+				width: 99%;
+				padding: 2px 1px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>BGG Pandemic Isolation Wrapper</h1>
+		<select id="bgg-id">
+			<option value="270701">Pandemic: Isolation (#1)</option>
+			<option value="270759">Pandemic: Isolation (#2) - Calling Local Heroes</option>
+			<option value="270799">Pandemic: Isolation (#3) - Breakout Corona</option>
+			<option value="270856">Pandemic: Isolation (#4) - Living on the Edge</option>
+			<option value="271034">Pandemic: Isolation (#5) - Black Heart</option>
+			<option value="271259">Pandemic: Isolation (#6) - Angry Elephant in Orange Underpants</option>
+			<option value="271457">Pandemic: Isolation (#7) - Oh So Predictable</option>
+			<option value="271573">Pandemic: Isolation (#8) - Predictable So Oh</option>
+			<option value="271640">Pandemic: Isolation (#9) - Pandemic?</option>
+			<option value="271755">Pandemic: Isolation (#10) - Population Boom!</option>
+			<option value="271888">Pandemic: Isolation (#11) - m&m surpise</option>
+			<option value="272114">Pandemic: Isolation (#12) - Out of Africa</option>
+			<option value="272257">Pandemic: Isolation (#13) - Triple Threat</option>
+			<option value="272356">Pandemic: Isolation (#14) - Dancing in the Street</option>
+			<option value="272553">Pandemic: Isolation (#15) - Hot Spot: Los Angeles</option>
+			<option value="272806">Pandemic: Isolation (#16) - Hot Spot: Madrid</option>
+			<option value="275229">Pandemic: Isolation (#17) - Hotspot: San Francisco</option>
+		</select>
+	</header>
+	<div id='bgg-wrapper' class="bgg-feed"></div>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script>
+		var $=jQuery;
+
+		$.fn.loadBGG = function(url) {
+	    //Credit: http://stackoverflow.com/questions/10943544/how-to-parse-an-rss-feed-using-javascript
+	    this.html("<p class='ie-hidden'>Querying BGG Wrapper for " + url + "...</p>");
+
+	    var target = this;
+
+	    $.ajax(url, {
+        accepts:{
+          xml:"application/rss+xml"
+        },
+        dataType:"xml",
+        success:function(data) {
+          var i = 0;
+          var list = $('<dl/>');
+          target.empty().append(list);
+          $(data).find("item").each(function () {
+						var header = (i == 0) ? 'Set up' : 'Step ' + i;
+						var toggleClass = (i == 0) ? '' : 'closed';
+						var text = $(this).find("body").text();
+						text = text.replace(/\[b\](.*?)\[\/b\]/ig, '<br /><strong>$1</strong><br />').replace(/\[-\](.*?)\[\/-\]/ig, '<span style="text-decoration:line-through;">$1</span>').replace(/\[\/?o[^\]]*\]/g, ' ').replace(/\[\/?imageid[^\]]*\]/g, '');
+
+						list.append('<div class="item ' + toggleClass + '"><dt>' + header + '</dt><dd>' + text + '</dd></div>');
+						i++;
+          });
+        },
+				error: function() {
+					if ($('#bgg-id').val()) {
+						setTimeout(function(){ location.reload(); }, 3000);
+					}
+				}
+	    });
+		}
+
+		$(document).ready(function($) {
+			$('html').removeClass('no-js').addClass('js-active');
+
+			if ( $('#bgg-id').val() ) {
+				$(".bgg-feed").each(function() {
+					$(this).loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
+				});
+			}
+		});
+
+		$(document).on('click', '.item dt', function() {
+			$(this).parent().toggleClass('closed');
+		})
+
+		$(document).on('change', '#bgg-id', function() {
+			$(".bgg-feed").each(function() {
+				$(this).loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
+			});
+		})
+	</script>
+</body>
+</html>
