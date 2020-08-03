@@ -42,18 +42,34 @@
 		}
 		header {
 			max-width: 640px;
-			margin: 36px auto;
+			margin: 36px auto 0;
 			padding: 0 20px;
 			text-align: center;
 		}
 		h1 {
 			color: #01204f;
 			font-size: 1.5em;
+			margin-bottom: 15px;
+		}
+		a {
+			color: #01204f;
+			text-decoration: none;
+		}
+		a:hover {
+			color: #000;
+		}
+		a.source-link {
+			text-align: center;
+			display: block;
+			margin-bottom: 56px;
 		}
 		.bgg-feed {
 			max-width: 640px;
-			margin: 0 auto 60px;
-			padding: 0 20px;
+			margin: 0 auto;
+			padding: 0 20px 60px;
+		}
+		dl {
+			margin: 0;
 		}
 		.item dt {
 			color: #FFF;
@@ -71,10 +87,11 @@
 			display: none;
 		}
 		select {
-				font-family: 'Source Sans Pro', Arial, sans-serif;
-				font-size: 1em;
-				width: 99%;
-				padding: 2px 1px;
+			font-family: 'Source Sans Pro', Arial, sans-serif;
+			font-size: 1em;
+			width: 99%;
+			padding: 2px 1px;
+			margin-bottom: 15px;
 		}
 	</style>
 </head>
@@ -123,7 +140,8 @@
           var i = 0;
           var list = $('<dl/>');
           target.empty().append(list);
-          $(data).find("item").each(function () {
+					list.append('<a href="https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '" class="source-link"><strong>Source:</strong> https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '</a>');
+					$(data).find("item").each(function () {
 						var header = (i == 0) ? 'Set up' : 'Step ' + i;
 						var toggleClass = (i == 0) ? '' : 'closed';
 						var text = $(this).find("body").text();
