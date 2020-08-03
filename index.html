@@ -145,7 +145,8 @@
 						var header = (i == 0) ? 'Set up' : 'Step ' + i;
 						var toggleClass = (i == 0) ? '' : 'closed';
 						var text = $(this).find("body").text();
-						text = text.replace(/\[b\](.*?)\[\/b\]/ig, '<br /><strong>$1</strong><br />').replace(/\[-\](.*?)\[\/-\]/ig, '<span style="text-decoration:line-through;">$1</span>').replace(/\[\/?o[^\]]*\]/g, ' ').replace(/\[\/?i[^\]]*\]/g, ' ').replace(/\[\/?imageid[^\]]*\]/g, '').replace(/\[\/?geeklist[^\]]*\]/g, '');
+						//text = text.replace(/\[b\](.*?)\[\/b\]/ig, '<br /><strong>$1</strong><br />').replace(/\[-\](.*?)\[\/-\]/ig, '<span style="text-decoration:line-through;">$1</span>').replace(/\[\/?o[^\]]*\]/g, ' ').replace(/\[\/?i[^\]]*\]/g, ' ').replace(/\[\/?imageid[^\]]*\]/g, '').replace(/\[\/?geeklist[^\]]*\]/g, '');
+						text = text.replace(/\r\n|\r|\n/g,'<br />').replace(/\[b\](.*?)\[\/b\]/ig, '<br /><strong>$1</strong><br />').replace(/\[-\](.*?)\[\/-\]/ig, '<span style="text-decoration:line-through;">$1</span>').replace(/\[\/?o[^\]]*\]/g, ' ').replace(/\[\/?i[^\]]*\]/g, ' ').replace(/\[\/?imageid[^\]]*\]/g, '').replace(/\[\/?geeklist[^\]]*\]/g, '').replace(/((<br \/>\s*)\1?)+/g, '<br />');
 
 						list.append('<div class="item ' + toggleClass + '"><dt>' + header + '</dt><dd>' + text + '</dd></div>');
 						i++;
