@@ -144,7 +144,7 @@
           var list = $('<dl/>');
           target.empty().append(list);
 					list.append('<a href="https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '" class="source-link"><strong>Source:</strong> https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '</a>');
-					list.append('<a href="' + window.location.href + '?geeklist=' + $('#bgg-id').val() + '" class="share-link"><strong>Share:</strong> ' + window.location.href + '?geeklist=' + $('#bgg-id').val() + '</a>');
+					list.append('<a href="' + location.protocol + '//' + location.host + location.pathname + '?geeklist=' + $('#bgg-id').val() + '" class="share-link"><strong>Share:</strong> ' + location.protocol + '//' + location.host + location.pathname + '?geeklist=' + $('#bgg-id').val() + '</a>');
 					$(data).find("item").each(function () {
 						var header = (i == 0) ? 'Set up' : 'Step ' + i;
 						var toggleClass = (i == 0) ? '' : 'closed';
