@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>🦠 BGG Pandemic Isolation Wrapper 🧫 | goYippi labs</title>
+	<title>BGG Pandemic Isolation Wrapper | goYippi labs</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +50,14 @@
 			color: #01204f;
 			font-size: 1.5em;
 			margin-bottom: 15px;
+		}
+		.header-svgs {
+			display: block;
+		}
+		.header-svgs img {
+			width: auto;
+			height: 32px;
+			display: inline-block;
 		}
 		a {
 			color: #01204f;
@@ -101,7 +109,7 @@
 
 <body>
 	<header>
-		<h1>BGG Pandemic Isolation Wrapper<br />🦠 🧫 🦠</h1>
+		<h1>BGG Pandemic Isolation Wrapper<span class="header-svgs"></span></h1>
 		<select id="bgg-id">
 			<option value="270701">Pandemic: Isolation (#1)</option>
 			<option value="270759">Pandemic: Isolation (#2) - Calling Local Heroes</option>
@@ -127,6 +135,8 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script>
 		var $=jQuery;
+
+		var svgs = ["svg/1F9A0.svg", "svg/1F9EA.svg", "svg/1F9EB.svg", "svg/1F9EC.svg", "svg/1F48A.svg", "svg/1F489.svg"];
 
 		$.fn.loadBGG = function(url) {
 	    //Credit: http://stackoverflow.com/questions/10943544/how-to-parse-an-rss-feed-using-javascript
@@ -178,7 +188,11 @@
 			}
 
 			if (id != '') {
-				$(".bgg-feed").loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + id + '?comments=0');
+				$('.bgg-feed').loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + id + '?comments=0');
+			}
+
+			for (var i = 0; i < 3; i++) {
+				$('.header-svgs').append('<img src="' + svgs[Math.floor(Math.random() * svgs.length)] + '" />');
 			}
 		});
 
@@ -187,7 +201,7 @@
 		})
 
 		$(document).on('change', '#bgg-id', function() {
-			$(".bgg-feed").loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
+			$('.bgg-feed').loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
 		})
 	</script>
 </body>
