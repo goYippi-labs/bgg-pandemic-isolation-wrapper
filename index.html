@@ -55,8 +55,6 @@
 			display: block;
 		}
 		.header-svgs img {
-			width: auto;
-			height: 32px;
 			display: inline-block;
 		}
 		a {
@@ -140,7 +138,7 @@
 	<div id='bgg-wrapper' class="bgg-feed"></div>
 	<div class="credits">Icons by <a href="https://openmoji.org/">openmoji</a>, released under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div>
 
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script>
 		var $=jQuery;
 
@@ -149,7 +147,7 @@
 		$.fn.getSVGs = function () {
 			$(this).empty();
 			for (var i = 0; i < 3; i++) {
-				$(this).append('<img src="' + svgs[Math.floor(Math.random() * svgs.length)] + '" />');
+				$(this).append('<img src="' + svgs[Math.floor(Math.random() * svgs.length)] + '" width="32" height="32" alt="SVG Icon" />');
 			}
 		}
 
