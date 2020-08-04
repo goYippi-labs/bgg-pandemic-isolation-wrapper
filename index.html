@@ -58,9 +58,12 @@
 		a:hover {
 			color: #000;
 		}
-		a.source-link {
+		a.source-link,
+		a.share-link {
 			text-align: center;
 			display: block;
+		}
+		a.share-link {
 			margin-bottom: 56px;
 		}
 		.bgg-feed {
@@ -141,6 +144,7 @@
           var list = $('<dl/>');
           target.empty().append(list);
 					list.append('<a href="https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '" class="source-link"><strong>Source:</strong> https://boardgamegeek.com/geeklist/' + $('#bgg-id').val() + '</a>');
+					list.append('<a href="' + window.location.href + '?geeklist=' + $('#bgg-id').val() + '" class="share-link"><strong>Share:</strong> ' + window.location.href + '?geeklist=' + $('#bgg-id').val() + '</a>');
 					$(data).find("item").each(function () {
 						var header = (i == 0) ? 'Set up' : 'Step ' + i;
 						var toggleClass = (i == 0) ? '' : 'closed';
@@ -163,10 +167,18 @@
 		$(document).ready(function($) {
 			$('html').removeClass('no-js').addClass('js-active');
 
-			if ( $('#bgg-id').val() ) {
-				$(".bgg-feed").each(function() {
-					$(this).loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
-				});
+			var id = '';
+			var split = location.search.replace('?', '').split('=')
+
+			if(split[0] == 'geeklist' && $('#bgg-id').find('option[value="' + split[1] + '"]').length) {
+				id = split[1];
+				$('#bgg-id option[value="' + id + '"]').attr('selected', 'selected');
+			} else if ( $('#bgg-id').val() ) {
+				id = $('#bgg-id').val();
+			}
+
+			if (id != '') {
+				$(".bgg-feed").loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + id + '?comments=0');
 			}
 		});
 
@@ -175,9 +187,7 @@
 		})
 
 		$(document).on('change', '#bgg-id', function() {
-			$(".bgg-feed").each(function() {
-				$(this).loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
-			});
+			$(".bgg-feed").loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
 		})
 	</script>
 </body>
