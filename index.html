@@ -146,6 +146,13 @@
 
 		var svgs = ['svg/1F9A0.svg', 'svg/1F9EA.svg', 'svg/1F9EB.svg', 'svg/1F9EC.svg', 'svg/1F48A.svg', 'svg/1F489.svg', 'svg/1F52C.svg', 'svg/1FA7A.svg'];
 
+		$.fn.getSVGs = function () {
+			$(this).empty();
+			for (var i = 0; i < 3; i++) {
+				$(this).append('<img src="' + svgs[Math.floor(Math.random() * svgs.length)] + '" />');
+			}
+		}
+
 		$.fn.loadBGG = function(url) {
 	    //Credit: http://stackoverflow.com/questions/10943544/how-to-parse-an-rss-feed-using-javascript
 	    this.html('<p class="ie-hidden">Querying BGG Wrapper for ' + url + '...</p>');
@@ -184,6 +191,7 @@
 
 		$(document).ready(function($) {
 			$('html').removeClass('no-js').addClass('js-active');
+			$('.header-svgs').getSVGs();
 
 			var id = '';
 			var split = location.search.replace('?', '').split('=')
@@ -198,10 +206,6 @@
 			if (id != '') {
 				$('.bgg-feed').loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + id + '?comments=0');
 			}
-
-			for (var i = 0; i < 3; i++) {
-				$('.header-svgs').append('<img src="' + svgs[Math.floor(Math.random() * svgs.length)] + '" />');
-			}
 		});
 
 		$(document).on('click', '.item dt', function() {
@@ -209,6 +213,7 @@
 		})
 
 		$(document).on('change', '#bgg-id', function() {
+			$('.header-svgs').getSVGs();
 			$('.bgg-feed').loadBGG('https://boardgamegeek.com/xmlapi/geeklist/' + $('#bgg-id').val() + '?comments=0');
 		})
 	</script>
