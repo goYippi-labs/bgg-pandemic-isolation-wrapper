@@ -104,6 +104,13 @@
 			padding: 2px 1px;
 			margin-bottom: 15px;
 		}
+		.credits {
+			text-align: center;
+			font-size: 0.875em;
+			max-width: 640px;
+			margin: 0 auto;
+			padding: 20px;
+		}
 	</style>
 </head>
 
@@ -131,16 +138,17 @@
 		</select>
 	</header>
 	<div id='bgg-wrapper' class="bgg-feed"></div>
+	<div class="credits">Icons by <a href="https://openmoji.org/">openmoji</a>, released under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div>
 
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script>
 		var $=jQuery;
 
-		var svgs = ["svg/1F9A0.svg", "svg/1F9EA.svg", "svg/1F9EB.svg", "svg/1F9EC.svg", "svg/1F48A.svg", "svg/1F489.svg"];
+		var svgs = ['svg/1F9A0.svg', 'svg/1F9EA.svg', 'svg/1F9EB.svg', 'svg/1F9EC.svg', 'svg/1F48A.svg', 'svg/1F489.svg', 'svg/1F52C.svg', 'svg/1FA7A.svg'];
 
 		$.fn.loadBGG = function(url) {
 	    //Credit: http://stackoverflow.com/questions/10943544/how-to-parse-an-rss-feed-using-javascript
-	    this.html("<p class='ie-hidden'>Querying BGG Wrapper for " + url + "...</p>");
+	    this.html('<p class="ie-hidden">Querying BGG Wrapper for ' + url + '...</p>');
 
 	    var target = this;
 
